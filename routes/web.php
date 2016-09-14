@@ -11,4 +11,4 @@
 |
 */
 
-Route::post('/api', 'api@insertClientInvoice');
+Route::resource('/api/{secretID?}/{accountID?}', 'api@index');
