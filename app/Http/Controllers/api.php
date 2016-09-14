@@ -9,7 +9,17 @@ use App\Http\Requests;
 class Api extends Controller
 {
 
-    public function insertClientInvoice()
+    public function index()
+    {
+
+    }
+
+    public function dispatchEvent()
+    {
+        
+    }
+
+    public function formatData($response)
     {
 
     }
