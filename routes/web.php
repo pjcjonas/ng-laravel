@@ -11,7 +11,4 @@
 |
 */
 
-Route::resource('/', 'welcome@index');
-Route::resource('/register', 'register@index');
-Route::resource('/login', 'login@index');
-Route::resource('/products', 'products@index');
+Route::post('/api', 'api@insertClientInvoice');
