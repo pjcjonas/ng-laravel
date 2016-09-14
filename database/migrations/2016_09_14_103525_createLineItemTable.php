@@ -23,9 +23,17 @@ class CreateLineItemTable extends Migration
             $table->decimal('price', 11, 2);
             $table->string('currency');
             $table->integer('quantity');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->dateTime('updated_at')->default(date('Y-m-d H:i:s'));
             $table->tinyInteger('deleted')->default(0);
         });
+
+        DB::getPdo()->exec('
+            CREATE TRIGGER lineItems_on_update BEFORE UPDATE ON lineItems FOR EACH ROW
+            BEGIN
+                SET new.updated_at := now();
+            END;
+        ');
     }
 
     /**

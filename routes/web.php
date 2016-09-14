@@ -11,4 +11,4 @@
 |
 */
 
-Route::resource('/api/{secretID?}/{accountID?}', 'api@index');
+Route::post('/api', 'api@index');

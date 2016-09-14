@@ -5,23 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Libraries\Api\ApiCore;
+use App\Clients;
 
 class Api extends Controller
 {
 
+    public $clientsModel;
+
     public function __construct()
     {
-
+        $this->clientsModel = new Clients();
     }
 
-    public function index($secretID = null, $accountID = null)
+    public function index()
     {
-        if (!empty($secretID) && !empty($accountID)) {
-            $this->validateTokens($secretID, $accountID);
-        }
+        $name = $this->clientsModel->all();
+        print_r($name);
     }
 
-    public function validateTokens($secretID, $accountID)
+    public function validateTokens($apiKey)
     {
 
     }
