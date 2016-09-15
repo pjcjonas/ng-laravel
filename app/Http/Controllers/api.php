@@ -19,8 +19,7 @@ class Api extends Controller
 
     public function index()
     {
-        $name = $this->clientsModel->all();
-        print_r($name);
+        echo "AWE";
     }
 
     public function validateTokens($apiKey)

@@ -21,8 +21,10 @@ class ClientInvoiceSeeder extends Seeder
         do {
             $clientData = [
                 'name' => str_random(15),
-                'email' => str_random(15) . '@gmail.com',
-                'apiKey' => Uuid::uuid4()->toString(),
+                'token' => Uuid::uuid4()->toString(),
+                'password' => password_hash('blue3232', PASSWORD_DEFAULT),
+                'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
+                'ip' => ceil(rand(1,255)) . "." . ceil(rand(1,255)) . "." . ceil(rand(1,255)) . "." . ceil(rand(1,255)),
             ];
 
             // Grab the client ID's for those that are inserted
@@ -37,7 +39,8 @@ class ClientInvoiceSeeder extends Seeder
             // Seed the invoice table with a random amount of invoices for each client
             do {
                 $invoiceData = [
-                    "clientID" => $clientID
+                    "clientID" => $clientID,
+                    "invoiceNumber" => 'INV' . rand(1,9999),
                 ];
 
                 // Grab the invoice id's for each client invoice added
@@ -46,7 +49,7 @@ class ClientInvoiceSeeder extends Seeder
             } while ($totalInvoices < ceil(rand(1,5)));
         }
 
-        $currency = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF'];
+        $currency = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'ZAR'];
         $totalLineItems = 0;
 
         // Loop through invoices to add lineitems for each

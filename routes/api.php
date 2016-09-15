@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:api');
+
+//Route::post('/', 'api@index');
+
+Route::post('/v1', 'api@index');

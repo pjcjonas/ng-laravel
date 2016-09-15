@@ -21,12 +21,14 @@ class CreateClientTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name', 255);
-            $table->string('email', 255);
-            $table->uuid('apiKey');
+            $table->uuid('token');
+            $table->string('password', 255);
+            $table->longText('description');
+            $table->string('ip', 15);
             $table->timestamp('created_at')->useCurrent();
             $table->dateTime('updated_at')->default(date('Y-m-d H:i:s'));
             $table->tinyInteger('deleted')->default(0);
-            $table->index(['name', 'email']);
+            $table->index(['name', 'ip']);
         });
 
         DB::getPdo()->exec('

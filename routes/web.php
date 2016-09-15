@@ -10,5 +10,3 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
-Route::post('/api', 'api@index');
