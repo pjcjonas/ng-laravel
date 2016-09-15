@@ -16,6 +16,8 @@ class ClientInvoiceSeeder extends Seeder
         $clientIDs = [];
         $invoiceIDs = [];
         $totalClients = 0;
+        $invoiceData = [];
+        $invoiceLineItems = [];
 
         // Seed the DB with clients
         do {
@@ -38,9 +40,11 @@ class ClientInvoiceSeeder extends Seeder
 
             // Seed the invoice table with a random amount of invoices for each client
             do {
+
                 $invoiceData = [
                     "clientID" => $clientID,
                     "invoiceNumber" => 'INV' . rand(1,9999),
+                    "invoiceDate" => date('Y-m-d H:i:s'),
                 ];
 
                 // Grab the invoice id's for each client invoice added

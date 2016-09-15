@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Libraries\Api\ApiCore;
@@ -30,11 +31,10 @@ class Api extends Controller
 
     public function index(Request $request)
     {
-
         $data = $request->all();
-
+        $ip = $request->ip();
         // Check if the password is sent
-        $this->response = $this->validateAuth($data);
+        $this->response = $this->validateAuth($data, $ip);
         if (!empty($this->response['errors']) && !$this->response['success']) {
             echo json_encode($this->response);
             return;
@@ -53,9 +53,9 @@ class Api extends Controller
             return;
         }
 
-        $this->response = $this->valideData($data['data'], $data['method']);
-        if (!empty($this->response['errors'])) {
-            $this->response = $this->getErrorResponse('invalidData');
+        $errors = $this->valideData($request, $data['method']);
+        if (!empty($errors)) {
+            $this->response = $this->getErrorResponse('invalidData', null, $errors);
             echo json_encode($this->response);
             return;
         }
@@ -69,7 +69,7 @@ class Api extends Controller
 
     }
 
-    public function validateAuth($request)
+    public function validateAuth($request, $ip)
     {
         // Check to see if the email is passed
         if (empty($request['email'])) {
@@ -89,9 +89,18 @@ class Api extends Controller
         $client = $this->clientsModel->where('email', $request['email'])
             ->get()->first();
 
+        if (empty($client)) {
+            $this->response['errors'] []= ApiErrors::$errors['userNotFound'];
+            return $this->response;
+        }
+
         if (password_verify($request['password'], $client->password)) {
-            $this->response['success'] = true; // FOUND
-            $this->response['data']['clientID'] = $client->id;
+            if ($ip != $client->ip) {
+                $this->response['errors'] []= ApiErrors::$errors['invalidLocation'];
+            } else {
+                $this->response['success'] = true; // FOUND
+                $this->response['data']['clientID'] = $client->id;
+            }
         } else {
             $this->response['errors'] []= ApiErrors::$errors['invalidUsernamePassword']; // FAILED
         }
@@ -104,59 +113,16 @@ class Api extends Controller
         return in_array($method, ApiMethods::$methods);
     }
 
-    public function valideData($data, $method)
+    public function valideData($request, $method)
     {
-        $crudTables = array_keys(ApiTables::$tables);
-        $dataTables = array_keys($data);
-        $this->response = [];
-        switch ($method) {
-            case "upsertInvoice":
-                foreach ($dataTables as $dataTable) {
-                    if (!in_array($dataTable, $crudTables)) {
-                        $this->response = $this->getErrorResponse('invalidTable', $dataTable);
-                    }
-                }
-            break;
-        }
-
-        /*
-        Array
-        (
-            [invoice] => Array
-                (
-                    [number] => INV5433
-                    [date] => 2015-01-01 14:21:53
-                    [line_items] => Array
-                        (
-                            [0] => Array
-                                (
-                                    [name] => Keyboard
-                                    [price] => 545.47
-                                    [currency] => ZAR
-                                    [quantity] => 3
-                                )
-
-                            [1] => Array
-                                (
-                                    [name] => Mouse
-                                    [price] => 125.35
-                                    [currency] => ZAR
-                                    [quantity] => 3
-                                )
-
-                        )
-
-                )
-
-        )
-        */
-
-        return $this->response;
+        $validator = Validator::make($request->all(), ApiTables::$tables[$method]["columns"]);
+        $errors = $validator->errors()->all();
+        return $errors;
     }
 
     public function dispatchEvent($method, $request, $response)
     {
-        echo "dispatchEvent";
+        
     }
 
     public function formatData($response)
@@ -164,10 +130,10 @@ class Api extends Controller
 
     }
 
-    public function getErrorResponse($error, $extra = null)
+    public function getErrorResponse($error, $extra = null, $errors = [])
     {
         $this->response = ["success" => false, "errors" => [], "data" => []];
-        $this->response['errors'] []= ApiErrors::$errors[$error];
+        $this->response['errors'] []= empty($errors) ? ApiErrors::$errors[$error] : $errors;
         $this->response['success'] = false;
         return $this->response;
     }

@@ -12,5 +12,7 @@ class ApiErrors
         'noData' =>                     ['code' => 105, 'message' => 'No data has been passed'],
         'invalidData' =>                ['code' => 106, 'message' => 'Data structure is invalid'],
         'invalidTable' =>               ['code' => 107, 'message' => 'Table name invalid: '],
+        'userNotFound' =>               ['code' => 108, 'message' => 'Client profile not found'],
+        'invalidLocation' =>            ['code' => 109, 'message' => 'You are posting from a invalid IP'],
     ];
 }
