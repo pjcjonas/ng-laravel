@@ -21,8 +21,8 @@ class ClientInvoiceSeeder extends Seeder
         do {
             $clientData = [
                 'name' => str_random(15),
-                'token' => Uuid::uuid4()->toString(),
-                'password' => password_hash('blue3232', PASSWORD_DEFAULT),
+                'email' => str_random(15) . "@gmail.com",
+                'password' => bcrypt('blue3232'),
                 'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
                 'ip' => ceil(rand(1,255)) . "." . ceil(rand(1,255)) . "." . ceil(rand(1,255)) . "." . ceil(rand(1,255)),
             ];

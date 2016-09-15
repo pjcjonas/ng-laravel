@@ -21,7 +21,7 @@ class CreateClientTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->string('name', 255);
-            $table->uuid('token');
+            $table->string('email', 255);
             $table->string('password', 255);
             $table->longText('description');
             $table->string('ip', 15);

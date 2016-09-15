@@ -20,6 +20,7 @@ class CreateInvoiceTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('clientID')->unsigned();
             $table->string('invoiceNumber');
+            $table->string('invoiceDate');
             $table->timestamp('created_at')->useCurrent();
             $table->dateTime('updated_at')->default(date('Y-m-d H:i:s'));
             $table->tinyInteger('deleted')->default(0);
