@@ -5,48 +5,17 @@ namespace Libraries\Api;
 class ApiTables
 {
     static $tables = [
-        "clients" => [
+        "upsertInvoice" => [
             "columns" => [
-                "name" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-                "password" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-            ],
-        ],
-        "invoices" => [
-            "columns" => [
-                "invoiceNumber" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-                "invoiceDate" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-            ],
-        ],
-        "lineItems" => [
-            "columns" => [
-                "name" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-                "price" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-                "quantity" => [
-                    "type" => "string",
-                    "required" => true
-                ],
-                "currency" => [
-                    "type" => "string",
-                    "required" => true
-                ],
+                "data" => "required|array|min:1",
+                "data.invoice" => "required|array|min:1",
+                "data.invoice.*.number" => "required|max:255",
+                "data.invoice.*.date" => "required|max:255",
+                "data.invoice.*.line_items" => "required|array|min:1",
+                "data.invoice.*.line_items.*.name" => "required|max:255",
+                "data.invoice.*.line_items.*.price" => "required|numeric|min:0",
+                "data.invoice.*.line_items.*.currency" => "required|max:3",
+                "data.invoice.*.line_items.*.quantity" => "required|min:1",
             ],
         ],
     ];
