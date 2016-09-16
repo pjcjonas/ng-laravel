@@ -8,7 +8,6 @@ use App\Http\Requests;
 use Libraries\Api\ApiCore;
 use Libraries\Api\ApiUtils;
 
-
 class Api extends Controller
 {
     /*
@@ -65,7 +64,7 @@ class Api extends Controller
 
         // everything passes, cal the dispatch event
         if (ApiUtils::$response['success']) {
-            $this->dispatchEvent($data['method'], $data['data'], ApiUtils::$response);
+            $this->dispatchEvent($data['method'], $data['data'], ApiUtils::$response['data']['clientID']);
         }
 
         // Output the json response
@@ -79,9 +78,9 @@ class Api extends Controller
      *
      * @return self:Array
      */
-    public function dispatchEvent($method, $request, $response)
+    public function dispatchEvent($method, $request, $clientID)
     {
-
+        return call_user_func("Libraries\\Api\\ApiCore::$method", $request, $clientID);
     }
 
 }
