@@ -86,6 +86,7 @@ return array(
     'Libraries\\Api\\ApiCore' => $baseDir . '/app/libraries/api/ApiCore.php',
     'Libraries\\Api\\ApiErrors' => $baseDir . '/app/libraries/api/ApiErrors.php',
     'Libraries\\Api\\ApiMethods' => $baseDir . '/app/libraries/api/ApiMethods.php',
+    'Libraries\\Api\\ApiModel' => $baseDir . '/app/libraries/api/ApiModel.php',
     'Libraries\\Api\\ApiTables' => $baseDir . '/app/libraries/api/ApiTables.php',
     'Libraries\\Api\\ApiUtils' => $baseDir . '/app/libraries/api/ApiUtils.php',
     'PHPUnit\\Framework\\TestCase' => $vendorDir . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',

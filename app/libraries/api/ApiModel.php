@@ -2,22 +2,21 @@
 
 namespace Libraries\Api;
 
-class ApiCore
+class ApiModel
 {
-
     /*
     |--------------------------------------------------------------------------
-    | Api ApiCore Library Class
+    | Api Models Library Class
     |--------------------------------------------------------------------------
     |
-    | Api request methods that will tie into the APIModel
-    |
+    | All api db calls will be made here in conjuciton with the
+    | correct api calls
     */
 
     /**
-     * List of all the API errors
+     * Lipsum...
      *
-     * @var static array
-     * TODO create the core mothds for the relevant api calls
+     * @var Lipsum...
+     * TODO Add in the api methods to update the models
      */
 }

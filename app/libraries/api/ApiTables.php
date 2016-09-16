@@ -4,7 +4,24 @@ namespace Libraries\Api;
 
 class ApiTables
 {
-    static $tables = [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Api Tables Library Class
+    |--------------------------------------------------------------------------
+    |
+    | Api tables class contains a tables array that is used to validate data
+    | strectures to make sure that the api structure is the as it should
+    | using the laravel Validator Library
+    |
+    */
+
+    /**
+     * Table list with columns used for validation
+     *
+     * @var static array
+     */
+    public static $tables = [
         "upsertInvoice" => [
             "columns" => [
                 "data" => "required|array|min:1",

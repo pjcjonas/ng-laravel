@@ -4,7 +4,22 @@ namespace Libraries\Api;
 
 class ApiErrors
 {
-    static $errors = [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Api Errors Library Class
+    |--------------------------------------------------------------------------
+    |
+    | List of all the API errors
+    |
+    */
+
+    /**
+     * List of all the API errors
+     *
+     * @var static array
+     */
+    public static $errors = [
         'noPassword' =>                 ['code' => 101, 'message' => 'No password supplied'],
         'noEmail' =>                    ['code' => 102, 'message' => 'No email address supplied'],
         'invalidUsernamePassword' =>    ['code' => 103, 'message' => 'Invalid username or password'],

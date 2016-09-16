@@ -2,140 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Libraries\Api\ApiCore;
-use Libraries\Api\ApiErrors;
-use Libraries\Api\ApiMethods;
-use Libraries\Api\ApiTables;
 use Libraries\Api\ApiUtils;
-use App\Clients;
-use App\Invoices;
-use App\LineItems;
+
 
 class Api extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Api Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the entry point for all API calls and checks
+    | authentication as well as validation of the data being sent to the
+    | from a external source to submit and extract data form the app
+    |
+    */
 
-    private $clientsModel;
-    private $invoicesModel;
-    private $lineItemsModel;
-    private $response = ["success" => false, "errors" => [], "data" => []];
-
-    public function __construct()
-    {
-        $this->clientsModel = new Clients();
-        $this->invoicesModel = new Invoices();
-        $this->lineItemsModel = new LineItems();
-    }
-
+    /**
+     * Api controller entry point
+     * All validation takes place here.
+     * Echos out the json string with the status of the call and any errors.
+     *
+     * @return void
+     */
     public function index(Request $request)
     {
         $data = $request->all();
         $ip = $request->ip();
+
         // Check if the password is sent
-        $this->response = $this->validateAuth($data, $ip);
-        if (!empty($this->response['errors']) && !$this->response['success']) {
-            echo json_encode($this->response);
+        ApiUtils::$response = ApiUtils::validateAuth($data, $ip);
+        if (!empty(ApiUtils::$response['errors']) && !ApiUtils::$response['success']) {
+            echo json_encode(ApiUtils::$response);
             return;
         }
 
         // Validate that the correct API call is made
-        if (empty($data['method']) || !$this->validateMethod($data['method'])) {
-            $this->response = $this->getErrorResponse('invalidMethod');
-            echo json_encode($this->response);
+        if (empty($data['method']) || !ApiUtils::validateMethod($data['method'])) {
+            ApiUtils::$response = ApiUtils::getErrorResponse('invalidMethod');
+            echo json_encode(ApiUtils::$response);
             return;
         }
 
+        // Check to see if the data object exists
         if (empty($data['data'])) {
-            $this->response = $this->getErrorResponse('noData');
-            echo json_encode($this->response);
+            ApiUtils::$response = ApiUtils::getErrorResponse('noData');
+            echo json_encode(ApiUtils::$response);
             return;
         }
 
-        $errors = $this->valideData($request, $data['method']);
+        // Validate the API request data structure
+        $errors = ApiUtils::valideData($request, $data['method']);
         if (!empty($errors)) {
-            $this->response = $this->getErrorResponse('invalidData', null, $errors);
-            echo json_encode($this->response);
+            ApiUtils::$response = ApiUtils::getErrorResponse('invalidData', null, $errors);
+            echo json_encode(ApiUtils::$response);
             return;
         }
 
-
-        if ($this->response['success']) {
-            $this->dispatchEvent($data['method'], $data['data'], $this->response);
+        // everything passes, cal the dispatch event
+        if (ApiUtils::$response['success']) {
+            $this->dispatchEvent($data['method'], $data['data'], ApiUtils::$response);
         }
 
-        echo json_encode($this->response);
+        // Output the json response
+        echo json_encode(ApiUtils::$response);
 
     }
 
-    public function validateAuth($request, $ip)
-    {
-        // Check to see if the email is passed
-        if (empty($request['email'])) {
-            $this->response['errors'] []= ApiErrors::$errors['noEmail'];
-        }
-
-        // Check if the password is passed
-        if (empty($request['password'])) {
-            $this->response['errors'] []= ApiErrors::$errors['noPassword'];
-        }
-
-        if ($this->response['errors']) {
-            return $this->response;
-        }
-
-        // Validate User
-        $client = $this->clientsModel->where('email', $request['email'])
-            ->get()->first();
-
-        if (empty($client)) {
-            $this->response['errors'] []= ApiErrors::$errors['userNotFound'];
-            return $this->response;
-        }
-
-        if (password_verify($request['password'], $client->password)) {
-            if ($ip != $client->ip) {
-                $this->response['errors'] []= ApiErrors::$errors['invalidLocation'];
-            } else {
-                $this->response['success'] = true; // FOUND
-                $this->response['data']['clientID'] = $client->id;
-            }
-        } else {
-            $this->response['errors'] []= ApiErrors::$errors['invalidUsernamePassword']; // FAILED
-        }
-
-        return $this->response;
-    }
-
-    public function validateMethod($method)
-    {
-        return in_array($method, ApiMethods::$methods);
-    }
-
-    public function valideData($request, $method)
-    {
-        $validator = Validator::make($request->all(), ApiTables::$tables[$method]["columns"]);
-        $errors = $validator->errors()->all();
-        return $errors;
-    }
-
+    /**
+     * Api event dispatcher
+     * After all validation passes the dispatcher sends the request to the API Model
+     *
+     * @return self:Array
+     */
     public function dispatchEvent($method, $request, $response)
     {
-        
-    }
 
-    public function formatData($response)
-    {
-
-    }
-
-    public function getErrorResponse($error, $extra = null, $errors = [])
-    {
-        $this->response = ["success" => false, "errors" => [], "data" => []];
-        $this->response['errors'] []= empty($errors) ? ApiErrors::$errors[$error] : $errors;
-        $this->response['success'] = false;
-        return $this->response;
     }
 
 }
