@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ClientInvoiceSeeder' => $baseDir . '/database/seeds/ClientInvoiceSeeder.php',
+    'CreateAdminTable' => $baseDir . '/database/migrations/2016_09_17_105019_createAdminTable.php',
     'CreateClientTable' => $baseDir . '/database/migrations/2016_09_14_092045_create_client_table.php',
     'CreateInvoiceTable' => $baseDir . '/database/migrations/2016_09_14_102213_createInvoiceTable.php',
     'CreateLineItemTable' => $baseDir . '/database/migrations/2016_09_14_103525_createLineItemTable.php',
@@ -540,4 +541,5 @@ return array(
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );
