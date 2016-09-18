@@ -36,82 +36,82 @@ Install all the software above
 
 **Step 5: Seeding**
 
-	* after the migrations have been run, you need to seed data into the tables, runn the following 2 commands
-		* ***$: php artisan db:seed --class=ClientInvoiceSeeder***
-		* ***$: php artisan db:seed --class=UsersTableSeeder***
-			* These will populate the tables with test data.
-			* **NOTE:** in the /database/seeds/UsersTableSeeder.php, you can customize the user logins there
+* after the migrations have been run, you need to seed data into the tables, runn the following 2 commands
+	* ***$: php artisan db:seed --class=ClientInvoiceSeeder***
+	* ***$: php artisan db:seed --class=UsersTableSeeder***
+		* These will populate the tables with test data.
+		* **NOTE:** in the /database/seeds/UsersTableSeeder.php, you can customize the user logins there
 
 **step 6: Login**
 
-	* Update your hosts file add the following entry:
-		* ***192.168.33.10           dev.box***
-	* Once the hosts file has been updated you can visit the site at http://dev_box
-		* You can log in now using the details you specified
+* Update your hosts file add the following entry:
+	* ***192.168.33.10           dev.box***
+* Once the hosts file has been updated you can visit the site at http://dev_box
+	* You can log in now using the details you specified
 
 **Step 7: API REQEUSTS**
 
-	* Send the following json object, be sure to update the client credentials else it will fail to validate.
-	>	{
-	>		"email" : "{Please Update}",
-	>		"password" : "blue3232",
-	>		"method" : "upsertInvoice",
-	>		"data" : {
-	>			"invoice": [
-	>				{
-	>					"number": "INV5433",
-	>					"date": "2015-01-01 14:21:53",
-	>					"line_items": [
-	>						{
-	>							"name": "Keyboard",
-	>							"price": 545.47,
-	>							"currency": "ZAR",
-	>							"quantity": 3
-	>						},
-	>						{
-	>							"name": "Mouse",
-	>							"price": 125.35,
-	>							"currency": "ZAR",
-	>							"quantity": 3
-	>						}
-	>					]
-	>				}
-	>			]
-	>		}
-	>	}
+* Send the following json object, be sure to update the client credentials else it will fail to validate.
+>	{
+>		"email" : "{Please Update}",
+>		"password" : "blue3232",
+>		"method" : "upsertInvoice",
+>		"data" : {
+>			"invoice": [
+>				{
+>					"number": "INV5433",
+>					"date": "2015-01-01 14:21:53",
+>					"line_items": [
+>						{
+>							"name": "Keyboard",
+>							"price": 545.47,
+>							"currency": "ZAR",
+>							"quantity": 3
+>						},
+>						{
+>							"name": "Mouse",
+>							"price": 125.35,
+>							"currency": "ZAR",
+>							"quantity": 3
+>						}
+>					]
+>				}
+>			]
+>		}
+>	}
 
 
 **AFFECTED FILES**
 
-	* Migrations
-		* *database\migrations\2016_09_14_092045_create_client_table.php*
-		* *database\migrations\2016_09_14_102213_createInvoiceTable.php*
-		* *database\migrations\2016_09_14_103525_createLineItemTable.php*
-		* *database\migrations\2016_09_14_112812_createRelatioships.php*
-		* *database\migrations\2016_09_17_105019_createAdminTable.php*
+* Migrations
+	* *database\migrations\2016_09_14_092045_create_client_table.php*
+	* *database\migrations\2016_09_14_102213_createInvoiceTable.php*
+	* *database\migrations\2016_09_14_103525_createLineItemTable.php*
+	* *database\migrations\2016_09_14_112812_createRelatioships.php*
+	* *database\migrations\2016_09_17_105019_createAdminTable.php*
 
-	* Seeds
-		* *database\seeds\ClientInvoiceSeeder.php*
-		* *database\seeds\UsersTableSeeder.php*
+* Seeds
+	* *database\seeds\ClientInvoiceSeeder.php*
+	* *database\seeds\UsersTableSeeder.php*
 
-	* Controllers
-		* *app\Http\Controllers\api.php*
-		* *app\Http\Controllers\DashboardController.php*
-		* *app\Http\Controllers\LoginController.php*
-			* *app\Http\Controllers\Auth\AuthController.php*
+* Controllers
+	* *app\Http\Controllers\api.php*
+	* *app\Http\Controllers\DashboardController.php*
+	* *app\Http\Controllers\LoginController.php*
+		* *app\Http\Controllers\Auth\AuthController.php*
 
-	* Libraries
-		* *app\libraries\api\ApiCore.php*
-		* *app\libraries\api\ApiErrors.php*
-		* *app\libraries\api\ApiMethods.php*
-		* *app\libraries\api\ApiModel.php*
-		* *app\libraries\api\ApiTables.php*
-		* *app\libraries\api\ApiUtils.php*
+* Libraries
+	* *app\libraries\api\ApiCore.php*
+	* *app\libraries\api\ApiErrors.php*
+	* *app\libraries\api\ApiMethods.php*
+	* *app\libraries\api\ApiModel.php*
+	* *app\libraries\api\ApiTables.php*
+	* *app\libraries\api\ApiUtils.php*
 
-	* Views
-		* *resources\views\login.blade.php*
-		* *resources\views\dashboard.blade.php*
-		* *resources\views\templates\master.blade.php*
+* Views
+	* *resources\views\login.blade.php*
+	* *resources\views\dashboard.blade.php*
+	* *resources\views\templates\master.blade.php*
 
-	* JavaScript
-		* *public\js\main.js*
+* JavaScript
+	* *public\js\main.js*
