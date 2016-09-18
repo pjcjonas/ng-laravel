@@ -52,33 +52,33 @@ Install all the software above
 **Step 7: API REQEUSTS**
 
 	* Send the following json object, be sure to update the client credentials else it will fail to validate.
-	>	{
-	>		"email" : "{Please Update}",
-	>		"password" : "blue3232",
-	>		"method" : "upsertInvoice",
-	>		"data" : {
-	>			"invoice": [
-	>				{
-	>					"number": "INV5433",
-	>					"date": "2015-01-01 14:21:53",
-	>					"line_items": [
-	>						{
-	>							"name": "Keyboard",
-	>							"price": 545.47,
-	>							"currency": "ZAR",
-	>							"quantity": 3
-	>						},
-	>						{
-	>							"name": "Mouse",
-	>							"price": 125.35,
-	>							"currency": "ZAR",
-	>							"quantity": 3
-	>						}
-	>					]
-	>				}
-	>			]
-	>		}
-	>	}
+		{
+			"email" : "{Please Update}",
+			"password" : "blue3232",
+			"method" : "upsertInvoice",
+			"data" : {
+				"invoice": [
+					{
+						"number": "INV5433",
+						"date": "2015-01-01 14:21:53",
+						"line_items": [
+							{
+								"name": "Keyboard",
+								"price": 545.47,
+								"currency": "ZAR",
+								"quantity": 3
+							},
+							{
+								"name": "Mouse",
+								"price": 125.35,
+								"currency": "ZAR",
+								"quantity": 3
+							}
+						]
+					}
+				]
+			}
+		}
 
 
 **AFFECTED FILES**
