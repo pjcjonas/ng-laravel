@@ -51,7 +51,7 @@ Install all the software above
 
 **Step 7: API REQEUSTS**
 
-* Send the following json object, be sure to update the client credentials else it will fail to validate.
+	* Send the following json object, be sure to update the client credentials else it will fail to validate.
 	>	{
 	>		"email" : "{Please Update}",
 	>		"password" : "blue3232",
