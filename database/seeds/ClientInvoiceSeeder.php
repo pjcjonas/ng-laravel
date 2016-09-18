@@ -43,7 +43,7 @@ class ClientInvoiceSeeder extends Seeder
 
                 $invoiceData = [
                     "clientID" => $clientID,
-                    "invoiceNumber" => 'INV' . rand(1,9999),
+                    "invoiceNumber" => 'INV' . str_random(15),
                     "invoiceDate" => date('Y-m-d H:i:s'),
                 ];
 
