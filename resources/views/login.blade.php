@@ -2,13 +2,18 @@
 
 @section('main')
 
-    <div class="container">
+
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
+            <div class="panel panel-default userLoginBox">
                 <div class="panel-heading">
                     <h3 class="panel-title">Admin Login</h3>
                 </div>
                 <div class="panel-body">
+
+                    @foreach($errors->all() as $error)
+                        <p class="alert alert-danger">{!!$error!!}</p>
+                    @endforeach
+
                     <form action="/postLogin" method="post" id="loginForm">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -24,6 +29,6 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 @stop

@@ -33,7 +33,7 @@ class AuthController extends Controller
         $this->user = $user;
         $this->auth = $auth;
 
-        $this->middleware('guest', ['except' => ['getLogout']]);
+        //$this->middleware('guest', ['except' => ['getLogout']]);
     }
 
     /**

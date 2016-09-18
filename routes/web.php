@@ -12,6 +12,8 @@
 */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard',"DashboardController@index");
+    Route::post('/postClientInvoices',"DashboardController@postClientInvoices");
+    Route::post('/postClientLineItems',"DashboardController@postClientLineItems");
 });
 
 
