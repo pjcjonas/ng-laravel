@@ -268,7 +268,7 @@ var validateAndSaveClient = function() {
 
 };
 
-
+// Delete a client using the clientID
 var confirmDeleteClient = function(clientID, clientName) {
 
     var deleteClient = confirm("Are you sure you want to delete client: " + clientID + " | " + clientName);
