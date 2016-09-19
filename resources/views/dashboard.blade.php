@@ -12,13 +12,18 @@
     <table class="table table-bordered"> <!-- CLIENT START -->
         <tbody id="mainClientsHolder">
             <?php foreach($clients as $client) { ?>
-                <tr class="clientRow" id="clientRow<?= $client['id'] ?>" data-clientid="<?= $client['id'] ?>">
+                <tr id="clientRow<?= $client['id'] ?>">
                     <td class="text-center"  width="30px">
                         <small><strong>#<?= $client['id'] ?></strong></small>
                     </td>
                     <td><?= $client['name'] ?></td>
-                    <td width="20px">
-                        <span class="glyphicon glyphicon-triangle-bottom "></span>
+                    <td >
+                        <button type="button" class="btn btn-danger btn-xs" onclick="confirmDeleteClient(<?= $client['id'] ?>, '<?= $client['name'] ?>')">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <button  data-clientid="<?= $client['id'] ?>" type="button" class="clientRow btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                        </button>
                     </td>
                 </tr>
                 <tr>

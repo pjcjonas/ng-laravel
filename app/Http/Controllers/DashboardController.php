@@ -55,7 +55,7 @@ class DashboardController extends Controller
     public function index()
     {
         // Get clients
-        $clients = self::$clientsModel->orderby('id', 'desc')->get(["id", "name", "email", "updated_at"]);
+        $clients = self::$clientsModel->where('deleted' ,0)->orderby('id', 'desc')->get(["id", "name", "email", "updated_at"]);
 
         return view('dashboard', ['clients' => $clients]);
     }
@@ -70,6 +70,7 @@ class DashboardController extends Controller
         $data = $request->all();
 
         $response = self::$invoicesModel->where(['clientID' => $data['clientID']])
+            ->where('deleted' ,0)
             ->orderby('updated_at', 'desc')
             ->get();
 
@@ -86,6 +87,7 @@ class DashboardController extends Controller
         $data = $request->all();
 
         $response = self::$lineItemsModel->where(['invoiceID' => $data['invoiceID']])
+            ->where('deleted' ,0)
             ->get();
 
         return response()->json($response->toArray());
@@ -212,5 +214,21 @@ class DashboardController extends Controller
             "errors" => $errors,
             'data' => ["name" => $data['name'], "id" => empty(self::$clientsModel->id) ? false : self::$clientsModel->id],
         ]);
+    }
+
+    /**
+     * Post delete a client by ID.
+     *
+     * @return json Response
+     */
+    public function postDeleteClientByID(Request $request)
+    {
+        $data = $request->all();
+
+        $response = self::$clientsModel->where('id' ,$data['id'])
+            ->where('deleted' ,0)
+            ->update(['deleted' => 1]);
+
+        return response()->json($response);
     }
 }

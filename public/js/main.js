@@ -186,12 +186,12 @@ var addInvoice = function(clientID) {
         initClickEvents();
         $('.addInvoiceLineItemModal').modal('hide');
     });
-}
+};
 
 // Sets new lineitem invoice ID
 var addInvoiceLineitemModal = function(invoiceID) {
     $('#lineItemInvoiceID').val(invoiceID);
-}
+};
 
 // Opens modal, validates and saves new line item
 var validateAndSaveLineItem = function() {
@@ -225,7 +225,7 @@ var validateAndSaveLineItem = function() {
         $('.addInvoiceLineItemModal').modal('hide');
     });
 
-}
+};
 
 // Create a new client
 var validateAndSaveClient = function() {
@@ -265,5 +265,27 @@ var validateAndSaveClient = function() {
         initClickEvents();
         $('.addClientModal').modal('hide');
     });
+
+};
+
+// Delete a client using the clientID
+var confirmDeleteClient = function(clientID, clientName) {
+
+    var deleteClient = confirm("Are you sure you want to delete client: " + clientID + " | " + clientName);
+
+    if (deleteClient) {
+        $.ajax({
+            method: "POST",
+            url: "/postDeleteClientByID",
+            data: {id: clientID},
+            dataType: 'json'
+        })
+        .done(function(response) {
+            if (response) {
+                $("#clientRow" + clientID).remove();
+                $("#client" + clientID).remove();
+            }
+        });
+    }
 
 }
